@@ -19,7 +19,7 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-    int64 user_id = 1;
+    string token = 1;
 }
 
 message LoginRequest {
@@ -33,7 +33,9 @@ message LoginResponse {
 }
 
 message ChangePasswordRequest {
-    string old_password = 1;
+    string phone = 1;
+    string old_password = 2;
+    int32 app_id = 3;
 }
 
 message ChangePasswordResponse {
@@ -42,6 +44,8 @@ message ChangePasswordResponse {
 
 message ForgetPasswordRequest {
     string phone = 1;
+    string new_password = 2;
+    int32 app_id = 3;
 }
 
 message ForgetPasswordResponse {
