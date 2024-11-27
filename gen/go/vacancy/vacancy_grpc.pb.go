@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	VacancyService_GetVacancyById_FullMethodName     = "/vacancy.VacancyService/GetVacancyById"
 	VacancyService_ListVacancy_FullMethodName        = "/vacancy.VacancyService/ListVacancy"
+	VacancyService_CreateVacancy_FullMethodName      = "/vacancy.VacancyService/CreateVacancy"
 	VacancyService_GetVacancyByUserId_FullMethodName = "/vacancy.VacancyService/GetVacancyByUserId"
 	VacancyService_UpdateVacancy_FullMethodName      = "/vacancy.VacancyService/UpdateVacancy"
 	VacancyService_StopVacancy_FullMethodName        = "/vacancy.VacancyService/StopVacancy"
@@ -33,6 +34,7 @@ const (
 type VacancyServiceClient interface {
 	GetVacancyById(ctx context.Context, in *GetVacancyByIdRequest, opts ...grpc.CallOption) (*GetVacancyByIdResponse, error)
 	ListVacancy(ctx context.Context, in *ListVacancyRequest, opts ...grpc.CallOption) (*ListVacancyResponse, error)
+	CreateVacancy(ctx context.Context, in *CreateVacancyRequest, opts ...grpc.CallOption) (*CreateVacancyResponse, error)
 	GetVacancyByUserId(ctx context.Context, in *GetVacancyByUserIdRequest, opts ...grpc.CallOption) (*GetVacancyByUserIdResponse, error)
 	UpdateVacancy(ctx context.Context, in *UpdateVacancyRequest, opts ...grpc.CallOption) (*UpdateVacancyResponse, error)
 	StopVacancy(ctx context.Context, in *StopVacancyRequest, opts ...grpc.CallOption) (*StopVacancyResponse, error)
@@ -61,6 +63,16 @@ func (c *vacancyServiceClient) ListVacancy(ctx context.Context, in *ListVacancyR
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListVacancyResponse)
 	err := c.cc.Invoke(ctx, VacancyService_ListVacancy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vacancyServiceClient) CreateVacancy(ctx context.Context, in *CreateVacancyRequest, opts ...grpc.CallOption) (*CreateVacancyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateVacancyResponse)
+	err := c.cc.Invoke(ctx, VacancyService_CreateVacancy_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -113,6 +125,7 @@ func (c *vacancyServiceClient) DeleteVacancy(ctx context.Context, in *DeleteVaca
 type VacancyServiceServer interface {
 	GetVacancyById(context.Context, *GetVacancyByIdRequest) (*GetVacancyByIdResponse, error)
 	ListVacancy(context.Context, *ListVacancyRequest) (*ListVacancyResponse, error)
+	CreateVacancy(context.Context, *CreateVacancyRequest) (*CreateVacancyResponse, error)
 	GetVacancyByUserId(context.Context, *GetVacancyByUserIdRequest) (*GetVacancyByUserIdResponse, error)
 	UpdateVacancy(context.Context, *UpdateVacancyRequest) (*UpdateVacancyResponse, error)
 	StopVacancy(context.Context, *StopVacancyRequest) (*StopVacancyResponse, error)
@@ -132,6 +145,9 @@ func (UnimplementedVacancyServiceServer) GetVacancyById(context.Context, *GetVac
 }
 func (UnimplementedVacancyServiceServer) ListVacancy(context.Context, *ListVacancyRequest) (*ListVacancyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListVacancy not implemented")
+}
+func (UnimplementedVacancyServiceServer) CreateVacancy(context.Context, *CreateVacancyRequest) (*CreateVacancyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateVacancy not implemented")
 }
 func (UnimplementedVacancyServiceServer) GetVacancyByUserId(context.Context, *GetVacancyByUserIdRequest) (*GetVacancyByUserIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVacancyByUserId not implemented")
@@ -198,6 +214,24 @@ func _VacancyService_ListVacancy_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VacancyServiceServer).ListVacancy(ctx, req.(*ListVacancyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VacancyService_CreateVacancy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateVacancyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VacancyServiceServer).CreateVacancy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VacancyService_CreateVacancy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VacancyServiceServer).CreateVacancy(ctx, req.(*CreateVacancyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -288,6 +322,10 @@ var VacancyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListVacancy",
 			Handler:    _VacancyService_ListVacancy_Handler,
+		},
+		{
+			MethodName: "CreateVacancy",
+			Handler:    _VacancyService_CreateVacancy_Handler,
 		},
 		{
 			MethodName: "GetVacancyByUserId",

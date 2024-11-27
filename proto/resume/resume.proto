@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package resume;
+
+option go_package = "ei_jobs.resume.v1;resumev1";
+
+service ResumeService {
+}

@@ -7,6 +7,7 @@ option go_package = "ei_jobs.vacancy.v1;vacancyv1";
 service VacancyService {
     rpc GetVacancyById(GetVacancyByIdRequest) returns (GetVacancyByIdResponse);
     rpc ListVacancy(ListVacancyRequest) returns (ListVacancyResponse);
+    rpc CreateVacancy(CreateVacancyRequest) returns (CreateVacancyResponse);
     rpc GetVacancyByUserId(GetVacancyByUserIdRequest) returns (GetVacancyByUserIdResponse);
     rpc UpdateVacancy(UpdateVacancyRequest) returns (UpdateVacancyResponse);
     rpc StopVacancy(StopVacancyRequest) returns (StopVacancyResponse);
@@ -19,7 +20,7 @@ message Vacancy {
     string city = 3;
     string country = 4;
     string company_name = 5;
-    int64 user_id = 6;
+    string token = 6;
     int64 specialization_id = 7;
     int64 salary_from = 8;
     int64 salary_to = 9;
@@ -56,6 +57,14 @@ message GetVacancyByIdResponse {
     Vacancy vacancy = 1;
 }
 
+message CreateVacancyRequest {
+    Vacancy vacancy = 1;
+}
+
+message CreateVacancyResponse {
+    bool success = 1;
+}
+
 message ListVacancyRequest {
     int64 specialization_id = 1;
     string title = 2;
@@ -73,7 +82,7 @@ message ListVacancyResponse {
 }
 
 message GetVacancyByUserIdRequest {
-    int64 user_id = 1;
+    string token = 1;
 }
 
 message GetVacancyByUserIdResponse {
