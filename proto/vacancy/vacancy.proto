@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package vacancy;
+
+option go_package = "ei_jobs.vacancy.v1;vacancyv1";
+
+service VacancyService {
+    rpc GetVacancyById(GetVacancyByIdRequest) returns (GetVacancyByIdResponse);
+    rpc ListVacancy(ListVacancyRequest) returns (ListVacancyResponse);
+    rpc GetVacancyByUserId(GetVacancyByUserIdRequest) returns (GetVacancyByUserIdResponse);
+    rpc UpdateVacancy(UpdateVacancyRequest) returns (UpdateVacancyResponse);
+    rpc StopVacancy(StopVacancyRequest) returns (StopVacancyResponse);
+    rpc DeleteVacancy(DeleteVacancyRequest) returns (DeleteVacancyResponse);
+}
+
+message Vacancy {
+    int64 id = 1;
+    string title = 2;
+    string city = 3;
+    string country = 4;
+    string company_name = 5;
+    int64 user_id = 6;
+    int64 specialization_id = 7;
+    int64 salary_from = 8;
+    int64 salary_to = 9;
+    string salary_period = 10;
+    string work_format = 11;
+    string work_schedule = 12;
+    string created_at = 13;
+    repeated Condition conditions = 14;
+    repeated Requirement requirements = 15;
+    repeated Responsibility responsibilities = 16;
+}
+
+message Condition {
+    int64 id = 1;
+    string icon = 2;
+    string condition = 3;
+}
+
+message Requirement {
+    int64 id = 1;
+    string requirement = 2;
+}
+
+message Responsibility {
+    int64 id = 1;
+    string responsibility = 2;
+}
+
+message GetVacancyByIdRequest {
+    int64 id = 1;
+}
+
+message GetVacancyByIdResponse {
+    Vacancy vacancy = 1;
+}
+
+message ListVacancyRequest {
+    int64 specialization_id = 1;
+    string title = 2;
+    string city = 3;
+    string country = 4;
+    int64 salary_from = 5;
+    string work_schedule = 6;
+    string work_format = 7;
+    int64 page = 8;
+}
+
+message ListVacancyResponse {
+    repeated Vacancy vacancies = 1;
+    int64 page = 2;
+}
+
+message GetVacancyByUserIdRequest {
+    int64 user_id = 1;
+}
+
+message GetVacancyByUserIdResponse {
+    repeated Vacancy vacancies = 1;
+}
+
+message UpdateVacancyRequest {
+    Vacancy vacancy = 1;
+}
+
+message UpdateVacancyResponse {
+    Vacancy vacancy = 1;
+}
+
+message StopVacancyRequest {
+    int64 id = 1;
+}
+
+message StopVacancyResponse {
+    bool success = 1;
+}
+
+message DeleteVacancyRequest {
+    int64 id = 1;
+}
+
+message DeleteVacancyResponse {
+    bool success = 1;
+}
