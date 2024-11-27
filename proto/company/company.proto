@@ -1,0 +1,152 @@
+syntax = "proto3";
+
+package company;
+
+option go_package = "ei_jobs.company.v1;companyv1";
+
+service CompanyService {
+    rpc ListCompany(ListCompanyRequest) returns (ListCompanyResponse);
+    rpc GetCompany(GetCompanyRequest) returns (GetCompanyResponse);
+    rpc ListCompanyProduct(ListCompanyProductRequest) returns (ListCompanyProductResponse);
+    rpc CreateCompanyProduct(CreateCompanyProductRequest) returns (CreateCompanyProductResponse);
+    rpc UpdateCompanyProduct(UpdateCompanyProductRequest) returns (UpdateCompanyProductResponse);
+    rpc DeleteCompanyProduct(DeleteCompanyProductRequest) returns (DeleteCompanyProductResponse);
+    rpc ListCompanyReviews(ListCompanyReviewsRequest) returns (ListCompanyReviewsResponse);
+    rpc CreateCompanyReview(CreateCompanyReviewRequest) returns (CreateCompanyReviewResponse);
+    rpc ListProductReviews(ListProductReviewsRequest) returns (ListProductReviewsResponse);
+    rpc CreateProductReview(CreateProductReviewRequest) returns (CreateProductReviewResponse);
+}
+
+message Company {
+    string id = 1;
+    string name = 2;
+    string phone = 4;
+    string description = 6;
+    string created_at = 7;
+    string updated_at = 8;
+    double average_rating = 9;
+}
+
+message CompanyProduct {
+    string id = 1;
+    string company_id = 2;
+    string name = 3;
+    string description = 4;
+    string category = 5;
+    double price = 6;
+    string created_at = 7;
+    string updated_at = 8;
+    double average_rating = 9;
+}
+
+message Review {
+    string id = 1;
+    int64 company_product_id = 2;
+    int64 reviewer_id = 3;
+    string reviewer_name = 4;
+    string content = 5;
+    int32 rating = 6;
+    string created_at = 7;
+    string updated_at = 8;
+}
+
+message ListCompanyRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+}
+
+message ListCompanyResponse {
+    repeated Company companies = 1;
+}
+
+message GetCompanyRequest {
+    string id = 1;
+}
+
+message GetCompanyResponse {
+    Company company = 1;
+}
+
+message ListCompanyReviewsRequest {
+    string company_id = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+}
+
+message ListCompanyReviewsResponse {
+    repeated Review reviews = 1;
+}
+
+message CreateCompanyReviewRequest {
+    string company_id = 1;
+    string reviewer_id = 2;
+    string content = 3;
+    int32 rating = 4;
+}
+
+message CreateCompanyReviewResponse {
+    Review review = 1;
+}
+
+message ListProductReviewsRequest {
+    string product_id = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+}
+
+message ListProductReviewsResponse {
+    repeated Review reviews = 1;
+}
+
+message CreateProductReviewRequest {
+    string product_id = 1;
+    string reviewer_id = 2;
+    string content = 3;
+    int32 rating = 4;
+}
+
+message CreateProductReviewResponse {
+    Review review = 1;
+}
+
+message ListCompanyProductRequest {
+    string company_id = 1;
+    int32 limit = 2;
+    int32 offset = 3;
+}
+
+message ListCompanyProductResponse {
+    repeated CompanyProduct products = 1;
+}
+
+message CreateCompanyProductRequest {
+    string company_id = 1;
+    string name = 2;
+    string description = 3;
+    string category = 4;
+    double price = 5;
+}
+
+message CreateCompanyProductResponse {
+    CompanyProduct product = 1;
+}
+
+message UpdateCompanyProductRequest {
+    string product_id = 1;
+    string name = 2;
+    string description = 3;
+    string category = 4;
+    double price = 5;
+}
+
+message UpdateCompanyProductResponse {
+    CompanyProduct product = 1;
+}
+
+message DeleteCompanyProductRequest {
+    string product_id = 1;
+}
+
+message DeleteCompanyProductResponse {
+    bool success = 1;
+}
