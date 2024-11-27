@@ -5,4 +5,112 @@ package resume;
 option go_package = "ei_jobs.resume.v1;resumev1";
 
 service ResumeService {
+    rpc GetResume(GetResumeRequest) returns (GetResumeResponse);
+    rpc GetResumeByUserId(GetResumeByUserIdRequest) returns (GetResumeByUserIdResponse);
+    rpc ListResume(ListResumeRequest) returns (ListResumeResponse);
+    rpc CreateResume(CreateResumeRequest) returns (CreateResumeResponse);
+    rpc UpdateResume(UpdateResumeRequest) returns (UpdateResumeResponse);
+    rpc DeleteResume(DeleteResumeRequest) returns (DeleteResumeResponse);
+}
+
+message Resume {
+    int32 id = 1;
+    int32 user_id = 2;
+    string date_of_birth = 3;
+    string gender = 4;
+    int32 specialization_id = 5;
+    string description = 6;
+    int32 salary_from = 7;
+    int32 salary_to = 8;
+    string salary_period = 9;
+    string created_at = 10;
+    repeated ResumeSkill skills = 11;
+    repeated ResumeOrganization organizations = 12;
+    string total_experience = 13;
+}
+
+message ResumeSkill {
+    int32 id = 1;
+    int32 resume_id = 2;
+    string skill = 3;
+}
+
+message ResumeOrganization {
+    int32 id = 1;
+    int32 resume_id = 2;
+    string organization_name = 3;
+    int32 specialization_id = 4;
+    string description = 5;
+    string start_month = 6;
+    string start_year = 7;
+    string end_month = 8;
+    string end_year = 9;
+}
+
+message GetResumeRequest {
+    int32 resume_id = 1;
+}
+
+message GetResumeResponse {
+    Resume resume = 1;
+}
+
+message GetResumeByUserIdRequest {
+    int32 user_id = 1;
+}
+
+message GetResumeByUserIdResponse {
+    repeated Resume resumes = 1;
+}
+
+message ListResumeRequest {
+    int32 specialization_id = 1;
+    string city = 2;
+    int32 salary_from = 3;
+}
+
+message ListResumeResponse {
+    repeated Resume resumes = 1;
+}
+
+message CreateResumeRequest {
+    string date_of_birth = 1;
+    string gender = 2;
+    int32 specialization_id = 3;
+    string description = 4;
+    int32 salary_from = 5;
+    int32 salary_to = 6;
+    string salary_period = 7;
+    repeated ResumeSkill skills = 8;
+    repeated ResumeOrganization organizations = 9;
+}
+
+message CreateResumeResponse {
+    Resume resume = 1;
+}
+
+message UpdateResumeRequest {
+    int32 resume_id = 1;
+    string date_of_birth = 2;
+    string gender = 3;
+    int32 specialization_id = 4;
+    string description = 5;
+    int32 salary_from = 6;
+    int32 salary_to = 7;
+    string salary_period = 8;
+    repeated ResumeSkill skills = 9;
+    repeated ResumeOrganization organizations = 10;
+    string total_experience = 11;
+}
+
+message UpdateResumeResponse {
+    Resume resume = 1;
+}
+
+message DeleteResumeRequest {
+    int32 resume_id = 1;
+}
+
+message DeleteResumeResponse {
+    bool success = 1;
 }

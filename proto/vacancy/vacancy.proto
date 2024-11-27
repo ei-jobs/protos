@@ -20,7 +20,7 @@ message Vacancy {
     string city = 3;
     string country = 4;
     string company_name = 5;
-    string token = 6;
+    int64 user_id = 6;
     int64 specialization_id = 7;
     int64 salary_from = 8;
     int64 salary_to = 9;
@@ -62,7 +62,7 @@ message CreateVacancyRequest {
 }
 
 message CreateVacancyResponse {
-    bool success = 1;
+    Vacancy vacancy = 1;
 }
 
 message ListVacancyRequest {
@@ -82,7 +82,7 @@ message ListVacancyResponse {
 }
 
 message GetVacancyByUserIdRequest {
-    string token = 1;
+    int64 user_id = 1;
 }
 
 message GetVacancyByUserIdResponse {
