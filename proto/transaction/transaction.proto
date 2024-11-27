@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package transaction;
+
+option go_package = "ei_jobs.transaction.v1;transactionv1";
+
+service TransactionService {
+    rpc ListTransactions(ListTransactionsRequest) returns (ListTransactionsResponse);
+    rpc CreateTransaction(CreateTransactionRequest) returns (CreateTransactionResponse);
+    rpc GetTransaction(GetTransactionRequest) returns (GetTransactionResponse);
+    rpc UpdateTransaction(UpdateTransactionRequest) returns (UpdateTransactionResponse);
+    rpc DeleteTransaction(DeleteTransactionRequest) returns (DeleteTransactionResponse);
+}
+
+message Transaction {
+    string id = 1;
+    string company_id = 2;
+    string company_product_id = 3;
+    string user_id = 4;
+    string amount = 5;
+    string transaction_date = 6;
+    string payment_method = 7;
+    string status = 8;
+}
+
+message ListTransactionsRequest {
+    string company_id = 1;
+    string user_id = 2;
+    int32 limit = 3;
+    int32 offset = 4;
+}
+
+message ListTransactionsResponse {
+    repeated Transaction transactions = 1;
+}
+
+message CreateTransactionRequest {
+    string company_id = 1;
+    string company_product_id = 2;
+    string user_id = 3;
+    string amount = 4;
+    string payment_method = 5;
+    string status = 6;
+}
+
+message CreateTransactionResponse {
+    Transaction transaction = 1;
+}
+
+message GetTransactionRequest {
+    string transaction_id = 1;
+}
+
+message GetTransactionResponse {
+    Transaction transaction = 1;
+}
+
+message UpdateTransactionRequest {
+    string transaction_id = 1;
+    string status = 2;
+}
+
+message UpdateTransactionResponse {
+    Transaction transaction = 1;
+}
+
+message DeleteTransactionRequest {
+    string transaction_id = 1;
+}
+
+message DeleteTransactionResponse {
+    bool success = 1;
+}
